@@ -1,0 +1,225 @@
+{% assign product = all_products[section.settings.product] %}
+
+<section class="wine-hero" style="padding: {{ section.settings.padding }}px 20px;">
+
+  <div class="wh-wrap">
+
+    <!-- LEFT: Images -->
+    <div class="wh-gallery">
+      {% if product.featured_image %}
+        <img
+          src="{{ product.featured_image | image_url: width: 900 }}"
+          alt="{{ product.title }}"
+          loading="lazy"
+        >
+      {% endif %}
+    </div>
+
+
+    <!-- RIGHT: Content -->
+    <div class="wh-content">
+
+      {% if section.settings.badge != blank %}
+        <span class="wh-badge">{{ section.settings.badge }}</span>
+      {% endif %}
+
+      <h2 class="wh-title">{{ product.title }}</h2>
+
+      <!-- Price -->
+      <div class="wh-price">
+        <span class="price">
+          {{ product.price | money }}
+        </span>
+
+        {% if product.compare_at_price > product.price %}
+          <span class="compare">
+            {{ product.compare_at_price | money }}
+          </span>
+        {% endif %}
+      </div>
+
+
+      <!-- Description -->
+      {% if section.settings.description != blank %}
+        <p class="wh-desc">{{ section.settings.description }}</p>
+      {% endif %}
+
+
+      <!-- Features list -->
+      <ul class="wh-features">
+        {% for block in section.blocks %}
+          <li {{ block.shopify_attributes }}>
+            ✓ {{ block.settings.text }}
+          </li>
+        {% endfor %}
+      </ul>
+
+
+      <!-- Button -->
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="wh-btn">
+          {{ section.settings.button_text }}
+        </button>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+
+
+<style>
+.wine-hero {
+  background: #faf8f4;
+}
+
+.wh-wrap {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.wh-gallery img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.wh-badge {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.wh-title {
+  font-size: 38px;
+  margin: 10px 0 16px;
+}
+
+.wh-price {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.price {
+  font-size: 26px;
+  font-weight: 700;
+  color: #7c1d1d;
+}
+
+.compare {
+  text-decoration: line-through;
+  opacity: .5;
+}
+
+.wh-desc {
+  margin-bottom: 20px;
+  opacity: .8;
+}
+
+.wh-features {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.wh-features li {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.wh-btn {
+  background: #5a1f1f;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.wh-btn:hover {
+  opacity: .9;
+}
+
+@media(max-width: 900px){
+  .wh-wrap{
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+
+
+{% schema %}
+{
+  "name": "Wine Product Hero",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select product"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge text",
+      "default": "BEST SELLER"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Short description",
+      "default": "Our most popular intro pack. Six different styles from family estates."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Get The 6-Pack →"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Section padding",
+      "min": 40,
+      "max": 160,
+      "step": 10,
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature bullet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Feature text",
+          "default": "Organic vineyards, less sulfites"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wine Product Hero",
+      "blocks": [
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" }
+      ]
+    }
+  ]
+}
+{% endschema %}

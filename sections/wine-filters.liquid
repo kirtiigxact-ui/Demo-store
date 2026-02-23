@@ -1,0 +1,56 @@
+<section class="wine-filters">
+
+  <form id="CollectionFiltersForm">
+
+    <div class="filters-wrapper">
+
+      {% for filter in collection.filters %}
+
+        <div class="filter">
+
+          <!-- Button -->
+          <button type="button" class="filter-btn">
+            {{ filter.label }}
+            <span class="caret">▾</span>
+          </button>
+
+          <!-- Dropdown -->
+          <div class="dropdown">
+
+            {% for value in filter.values %}
+              <label>
+                <input
+                  type="checkbox"
+                  name="{{ filter.param_name }}"
+                  value="{{ value.value }}"
+                  {% if value.active %}checked{% endif %}
+                >
+                {{ value.label }} ({{ value.count }})
+              </label>
+            {% endfor %}
+
+          </div>
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+  </form>
+
+</section>
+<script src="{{ 'filters.js' | asset_url }}" defer></script>
+{% schema %}
+{
+  "name": "Wine Filters",
+  "tag": "section",
+  "class": "wine-filters-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Wine Filters"
+    }
+  ]
+}
+{% endschema %}

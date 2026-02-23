@@ -1,0 +1,369 @@
+{% comment %}
+  Wine Offer Hero – Clean Version
+{% endcomment %}
+
+<section class="wine-offer-hero">
+  <div class="wine-offer-wrapper">
+
+    <!-- LEFT IMAGE -->
+    <div class="wine-offer-image">
+      {% if section.settings.image %}
+        <img
+          src="{{ section.settings.image | image_url: width: 1200 }}"
+          alt="{{ section.settings.title }}"
+          loading="lazy"
+        >
+      {% endif %}
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div class="wine-offer-content">
+
+      {% if section.settings.badge != blank %}
+        <span class="wine-badge">{{ section.settings.badge }}</span>
+      {% endif %}
+
+      <h2 class="wine-title">
+        {{ section.settings.title }}
+      </h2>
+
+
+      <!-- PRICE -->
+      <div class="wine-price-row">
+        <span class="wine-price">{{ section.settings.price }}</span>
+
+        {% if section.settings.compare_price != blank %}
+          <span class="wine-compare">{{ section.settings.compare_price }}</span>
+        {% endif %}
+
+        {% if section.settings.save_text != blank %}
+          <span class="wine-save">{{ section.settings.save_text }}</span>
+        {% endif %}
+      </div>
+
+      <p class="wine-subtext">
+        {{ section.settings.description }}
+      </p>
+
+
+      <!-- BENEFITS -->
+      <ul class="wine-benefits">
+        {% for block in section.blocks %}
+          <li class="wine-benefit">
+            <span class="check">✓</span>
+            {{ block.settings.text }}
+          </li>
+        {% endfor %}
+      </ul>
+
+
+      <!-- PURCHASE OPTIONS -->
+      <div class="wine-purchase">
+
+        <label class="purchase-option active">
+          <input type="radio" name="purchase_type" checked>
+          <span class="left">One-time purchase</span>
+          <span class="right">{{ section.settings.price }}</span>
+        </label>
+
+        <label class="purchase-option">
+          <input type="radio" name="purchase_type">
+          <span class="left">Never Run Out</span>
+          <span class="right">{{ section.settings.price }}</span>
+        </label>
+
+      </div>
+
+
+      <!-- BUTTON -->
+      <a href="{{ section.settings.button_link }}" class="wine-btn full">
+        {{ section.settings.button_text }}
+      </a>
+
+      {% if section.settings.shipping_note != blank %}
+        <p class="wine-shipping">{{ section.settings.shipping_note }}</p>
+      {% endif %}
+
+      {% if section.settings.satisfactory != blank %}
+        <p class="wine-satisfaction">{{ section.settings.satisfactory }}</p>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+
+<style>
+
+.wine-offer-hero {
+  padding: 40px 20px 60px;
+  background: #fff;
+}
+
+.wine-offer-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.wine-offer-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.wine-offer-image img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+
+  border-radius: 14px;
+  background: #f9f8f4;
+  padding: 40px;
+}
+
+.wine-offer-content {
+  width: 100%;
+  height: auto; /* remove fixed height */
+}
+
+.wine-badge {
+  color: #b70000;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: Montserrat, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.wine-title {
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.2;
+  font-weight: 400;
+  margin: 10px 0 20px;
+  font-family: Baskerville, serif;
+}
+
+.wine-price-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.wine-price {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  color: #7c0a02;
+  font-family: Montserrat, sans-serif;
+}
+
+.wine-compare {
+  text-decoration: line-through;
+  color: #a6a6a6;
+  font-size: 18px;
+}
+
+.wine-save {
+  background: #e9f3e9;
+  font-size: 14px;
+  border-radius: 100px;
+  font-weight: 600;
+  color: #389531;
+  padding: 5px 14px;
+}
+
+.wine-subtext {
+  color: #535353;
+  font-size: 16px;
+  font-family: Montserrat, sans-serif;
+}
+
+.wine-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+  border-top: 1px solid #e6e6e6;
+}
+
+.wine-benefit {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #e6e6e6;
+  font-weight: 600;
+  font-family: Montserrat, sans-serif;
+  font-size: 15px;
+}
+
+.check {
+  color: #20a464;
+  font-weight: 700;
+}
+
+.wine-purchase {
+  margin: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.purchase-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 2px solid #e5e5e5;
+  background: #fff;
+
+  cursor: pointer;
+  transition: .2s;
+  width: 100%;
+}
+
+.purchase-option:hover {
+  border-color: #c9c9c9;
+}
+
+.purchase-option input {
+  display: none;
+}
+
+.purchase-option.active {
+  border-color: #7a0c0c;
+}
+
+.purchase-option .right {
+  font-weight: 600;
+}
+
+.wine-btn {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+
+  text-align: center;
+  background: #732f38;
+  color: #fff;
+
+  padding: 16px 26px;
+  border-radius: 30px;
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  margin-top: 8px;
+  transition: .2s;
+}
+
+.wine-btn:hover {
+  opacity: .9;
+}
+
+.wine-shipping {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #777;
+}
+
+.wine-satisfaction {
+  margin-top: 16px;
+  padding: 18px;
+  font-size: 14px;
+  color: #535353;
+
+  background: #f9f8f4;
+  border-radius: 10px;
+
+  font-family: Montserrat, sans-serif;
+}
+
+@media (max-width: 900px) {
+
+  .wine-offer-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .wine-offer-image img {
+    max-width: 420px;
+    padding: 28px;
+  }
+
+  .wine-btn {
+    max-width: 100%;
+  }
+
+}
+
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll('.purchase-option').forEach(option => {
+    option.addEventListener('click', () => {
+      document.querySelectorAll('.purchase-option').forEach(o => o.classList.remove('active'));
+      option.classList.add('active');
+    });
+  });
+});
+</script>
+
+
+
+{% schema %}
+{
+  "name": "Wine Offer Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "BEST SELLER" },
+    { "type": "text", "id": "title", "label": "Title", "default": "6 Clean Italian Reds" },
+    { "type": "text", "id": "price", "label": "Price", "default": "$119.90" },
+    { "type": "text", "id": "compare_price", "label": "Compare price", "default": "$139.00" },
+    { "type": "text", "id": "save_text", "label": "Save text", "default": "Save $19.10" },
+    { "type": "textarea", "id": "description", "label": "Description" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Get The 6-Pack →" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "shipping_note", "label": "Shipping note" },
+    { "type": "text", "id": "satisfactory", "label": "Satisfactory", "default": "100% Satisfaction Guarantee. Don’t love it? We’ll make it right." }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Benefit text",
+          "default": "Organic vineyards, less sulfites"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wine Offer Hero",
+      "blocks": [
+        { "type": "benefit" },
+        { "type": "benefit" },
+        { "type": "benefit" },
+        { "type": "benefit" }
+      ]
+    }
+  ]
+}
+{% endschema %}
